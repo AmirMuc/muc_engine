@@ -20,10 +20,21 @@ bool AABB::contains(const Vec2 &point) const
             point.y >= min.y && point.y <= max.y);
 }
 
-AABB make_polygon_AABB(const std::vector<Vec2>& polygon)
+bool Circle::intersects_circle(Circle other) const
 {
-    auto [x_min, x_max] = project_polygon(polygon, {1,0});
-    auto [y_min, y_max] = project_polygon(polygon, {0,1});
+    float r = radius + other.radius;
+    r *= r;
+    float distance_squared = (position.x + other.position.x) *
+                             (position.x + other.position.x) +
+                             (position.y + other.position.y) *
+                             (position.y + other.position.y);
+    return r < distance_squared;
+}
+
+AABB make_AABB(const std::vector<Vec2> &polygon)
+{
+    auto [x_min, x_max] = project_polygon(polygon, {1, 0});
+    auto [y_min, y_max] = project_polygon(polygon, {0, 1});
     Vec2 min = {x_min, y_min};
     Vec2 max = {x_max, y_max};
     return AABB(min, max);

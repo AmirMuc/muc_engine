@@ -18,5 +18,13 @@ struct AABB {
     bool contains(const Vec2& point) const;
 };
 
-AABB make_polygon_AABB(const std::vector<Vec2>& polygon);
+
+struct Circle {
+    float radius;
+    Vec2 position;
+
+    bool intersects_circle(Circle other) const;
+};
+
+AABB make_AABB(const std::vector<Vec2>& polygon);
 #endif //SHAPES_H
